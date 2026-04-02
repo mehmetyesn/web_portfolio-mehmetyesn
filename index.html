@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolyo - Profesyonel Çalışmalar</title>
+    <title>Mehmet Yeşin - Portfolyo</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-   <!-- Navigasyon -->
+    <!-- Navigasyon -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-content">
@@ -18,12 +15,12 @@
                     <span class="logo-icon">▲</span>
                     <span class="logo-text">Portfolio</span>
                 </div>
-                <ul class="nav-menu">
-                    <li><a href="#home" class="nav-link active">Ana Sayfa</a></li>
-                    <li><a href="#about" class="nav-link">Hakkında</a></li>
-                    <li><a href="#projects" class="nav-link">Projeler</a></li>
-                    <li><a href="#services" class="nav-link">Hizmetler</a></li>
-                    <li><a href="#contact" class="nav-link">İletişim</a></li>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home" class="nav-link active" onclick="goToPage('home')">Ana Sayfa</a></li>
+                    <li><a href="#about" class="nav-link" onclick="goToPage('about')">Hakkında</a></li>
+                    <li><a href="#projects" class="nav-link" onclick="goToPage('projects')">Projeler</a></li>
+                    <li><a href="#services" class="nav-link" onclick="goToPage('services')">Hizmetler</a></li>
+                    <li><a href="#contact" class="nav-link" onclick="goToPage('contact')">İletişim</a></li>
                 </ul>
                 <button class="menu-toggle" id="menuToggle">
                     <span></span>
@@ -34,36 +31,21 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">Merhaba, Ben <span class="highlight">Mehmet YEŞİN</span></h1>
-                    <p class="hero-subtitle">Yaratıcı ve işlevsel dijital çözümler sunuyorum</p>
-                    <p class="hero-description">
-                        Web tasarım, UI/UX ve frontend geliştirme alanında çalışıyorum.
-                        Projelerinizi hayata geçirmek için buradayım.
-                    </p>
-                    <div class="hero-buttons">
-                        <button class="btn btn-primary" onclick="scrollToSection('projects')">Projelerime Bak</button>
-                        <button class="btn btn-secondary" onclick="scrollToSection('contact')">İletişime Geç</button>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <div class="profile-image">
-                        <div class="profile-image">
-                             <img src="profil.jpeg" alt="Mehmet Yeşin">
-                                                    
-                            <defs>
-                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <circle cx="100" cy="100" r="95" fill="url(#grad1)" opacity="0.1"/>
-                            <circle cx="100" cy="80" r="35" fill="url(#grad1)"/>
-                            <path d="M 60 140 Q 100 160 140 140" fill="url(#grad1)" opacity="0.8"/>
+    <!-- Ana Sayfa -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">Merhaba, Ben <span class="highlight">Mehmet YEŞİN</span></h1>
+                        <p class="hero-subtitle">Yaratıcı ve işlevsel dijital çözümler sunuyorum</p>
+                        <p class="hero-description">
+                            Web tasarım, UI/UX ve frontend geliştirme alanında çalışıyorum.
+                            Projelerinizi hayata geçirmek için buradayım.
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="goToPage('projects')">Projelerime Bak</button>
+                            <button class="btn btn-secondary" onclick="goToPage('contact')">İletişime Geç</button>
                         </div>
                     </div>
                 </div>
@@ -71,8 +53,8 @@
         </div>
     </section>
 
-    <!-- Hakkında Bölümü -->
-    <section id="about" class="about">
+    <!-- Hakkında Sayfası -->
+    <section id="about" class="page">
         <div class="container">
             <h2 class="section-title">Hakkında</h2>
             <div class="about-content">
@@ -80,13 +62,14 @@
                     <h3>Kimim?</h3>
                     <p>
                         Benim adım Mehmet Yeşin. Ahi Evran Üniversitesi Bilgisayar Programcılığı bölümünde 2. sınıf öğrencisiyim.
-                     Yazılım geliştirme ve teknoloji alanına ilgi duyuyor, bu alanda kendimi sürekli geliştirmeye çalışıyorum. 
-                     Eğitim sürecimde web teknolojileri, programlama ve veritabanı konularında projeler geliştirerek pratik deneyim kazanmaya odaklanıyorum.
-                      Amacım öğrendiğim bilgileri gerçek projelere dönüştürerek yazılım alanında yetkin bir geliştirici olmaktır. 
-                      Bu portfolyo sitesi ise yaptığım çalışmaların ve projelerin bir kısmını paylaşmak için hazırlanmıştır.
+                        Yazılım geliştirme ve teknoloji alanına ilgi duyuyor, bu alanda kendimi sürekli geliştirmeye çalışıyorum.
                     </p>
                     <p>
-                        Her projede, müşteri ihtiyaçlarını anlamak ve beklentileri aşmak için çalışıyorum. 
+                        Eğitim sürecimde web teknolojileri, programlama ve veritabanı konularında projeler geliştirerek pratik deneyim kazanmaya odaklanıyorum.
+                        Amacım öğrendiğim bilgileri gerçek projelere dönüştürerek yazılım alanında yetkin bir geliştirici olmaktır.
+                    </p>
+                    <p>
+                        Her projede, müşteri ihtiyaçlarını anlamak ve beklentileri aşmak için çalışıyorum.
                         Takım çalışmasına inanıyorum ve iş birliğini değerli buluyorum.
                     </p>
                 </div>
@@ -105,13 +88,13 @@
                         </div>
                         <div class="skill-card">
                             <div class="skill-icon">🎨</div>
-                            <h4>Grafik ve Animasyon </h4>
-                            <p>Photoshop ,Animate</p>
+                            <h4>Grafik ve Animasyon</h4>
+                            <p>Photoshop, Animate</p>
                         </div>
                         <div class="skill-card">
                             <div class="skill-icon">💻</div>
                             <h4>Diller</h4>
-                            <p>Php, C#, Java</p>
+                            <p>PHP, C#, Java</p>
                         </div>
                     </div>
                 </div>
@@ -119,28 +102,21 @@
         </div>
     </section>
 
-    <!-- Projeler Bölümü -->
-    <section id="projects" class="projects">
+    <!-- Projeler Sayfası -->
+    <section id="projects" class="page">
         <div class="container">
             <h2 class="section-title">Projeler</h2>
             
             <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">Tümü</button>
-                <button class="filter-btn" data-filter="web">Web</button>
-                <button class="filter-btn" data-filter="design">Tasarım</button>
-                <button class="filter-btn" data-filter="app">Uygulama</button>
+                <button class="filter-btn active" onclick="filterProjects('all')">Tümü</button>
+                <button class="filter-btn" onclick="filterProjects('web')">Web</button>
+                <button class="filter-btn" onclick="filterProjects('design')">Tasarım</button>
+                <button class="filter-btn" onclick="filterProjects('app')">Uygulama</button>
             </div>
 
-            <div class="projects-grid">
+            <div class="projects-grid" id="projectsGrid">
                 <div class="project-card" data-category="web">
-                    <div class="project-image">
-                        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="300" height="200" fill="#e0e7ff"/>
-                            <rect x="20" y="20" width="260" height="30" fill="#3b82f6" rx="5"/>
-                            <rect x="20" y="70" width="260" height="100" fill="#f3f4f6" rx="5"/>
-                            <circle cx="40" cy="35" r="8" fill="#ffffff"/>
-                        </svg>
-                    </div>
+                    <div class="project-image">🛍️</div>
                     <div class="project-info">
                         <h3>E-Ticaret Sitesi</h3>
                         <p>Modern ve responsive e-ticaret platformu. React ve Node.js ile geliştirildi.</p>
@@ -149,18 +125,11 @@
                             <span class="tag">Node.js</span>
                             <span class="tag">MongoDB</span>
                         </div>
-                        <a href="#" class="project-link">Projeyi Gör →</a>
                     </div>
                 </div>
 
                 <div class="project-card" data-category="design">
-                    <div class="project-image">
-                        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="300" height="200" fill="#dbeafe"/>
-                            <circle cx="80" cy="80" r="40" fill="#3b82f6"/>
-                            <rect x="140" y="50" width="120" height="80" fill="#1e40af" rx="5"/>
-                        </svg>
-                    </div>
+                    <div class="project-image">📱</div>
                     <div class="project-info">
                         <h3>Mobil Uygulama Tasarımı</h3>
                         <p>iOS ve Android için modern mobil uygulama arayüz tasarımı.</p>
@@ -169,18 +138,11 @@
                             <span class="tag">UI/UX</span>
                             <span class="tag">Mobile</span>
                         </div>
-                        <a href="#" class="project-link">Projeyi Gör →</a>
                     </div>
                 </div>
 
                 <div class="project-card" data-category="web">
-                    <div class="project-image">
-                        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="300" height="200" fill="#eff6ff"/>
-                            <rect x="20" y="20" width="80" height="160" fill="#3b82f6" rx="5"/>
-                            <rect x="110" y="20" width="170" height="160" fill="#60a5fa" rx="5"/>
-                        </svg>
-                    </div>
+                    <div class="project-image">🏢</div>
                     <div class="project-info">
                         <h3>Kurumsal Web Sitesi</h3>
                         <p>Şirket tanıtım sitesi. SEO optimizasyonu ve hızlı yükleme süresi.</p>
@@ -189,18 +151,11 @@
                             <span class="tag">JavaScript</span>
                             <span class="tag">SEO</span>
                         </div>
-                        <a href="#" class="project-link">Projeyi Gör →</a>
                     </div>
                 </div>
 
                 <div class="project-card" data-category="app">
-                    <div class="project-image">
-                        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="300" height="200" fill="#bfdbfe"/>
-                            <rect x="60" y="30" width="180" height="140" fill="#3b82f6" rx="10"/>
-                            <circle cx="150" cy="170" r="8" fill="#3b82f6"/>
-                        </svg>
-                    </div>
+                    <div class="project-image">👥</div>
                     <div class="project-info">
                         <h3>Sosyal Medya Uygulaması</h3>
                         <p>Gerçek zamanlı sohbet ve paylaşım özelliği olan sosyal ağ uygulaması.</p>
@@ -209,18 +164,11 @@
                             <span class="tag">Firebase</span>
                             <span class="tag">Real-time</span>
                         </div>
-                        <a href="#" class="project-link">Projeyi Gör →</a>
                     </div>
                 </div>
 
                 <div class="project-card" data-category="design">
-                    <div class="project-image">
-                        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="300" height="200" fill="#93c5fd"/>
-                            <path d="M 50 100 L 150 50 L 250 100 L 150 150 Z" fill="#3b82f6"/>
-                            <circle cx="150" cy="100" r="20" fill="#1e40af"/>
-                        </svg>
-                    </div>
+                    <div class="project-image">🎨</div>
                     <div class="project-info">
                         <h3>Grafik Tasarım Koleksiyonu</h3>
                         <p>Çeşitli markalar için logo ve grafik tasarım çalışmaları.</p>
@@ -229,18 +177,11 @@
                             <span class="tag">Branding</span>
                             <span class="tag">Illustrator</span>
                         </div>
-                        <a href="#" class="project-link">Projeyi Gör →</a>
                     </div>
                 </div>
 
                 <div class="project-card" data-category="web">
-                    <div class="project-image">
-                        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="300" height="200" fill="#bfdbfe"/>
-                            <rect x="20" y="20" width="260" height="160" fill="#3b82f6" rx="5"/>
-                            <rect x="40" y="40" width="220" height="120" fill="#ffffff" rx="3"/>
-                        </svg>
-                    </div>
+                    <div class="project-image">📝</div>
                     <div class="project-info">
                         <h3>Blog Platformu</h3>
                         <p>Yazılar, yorum ve kategori yönetimi ile tam özellikli blog sistemi.</p>
@@ -249,15 +190,14 @@
                             <span class="tag">PostgreSQL</span>
                             <span class="tag">CMS</span>
                         </div>
-                        <a href="#" class="project-link">Projeyi Gör →</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Hizmetler Bölümü -->
-    <section id="services" class="services">
+    <!-- Hizmetler Sayfası -->
+    <section id="services" class="page">
         <div class="container">
             <h2 class="section-title">Hizmetler</h2>
             <div class="services-grid">
@@ -336,8 +276,8 @@
         </div>
     </section>
 
-    <!-- İletişim Bölümü -->
-    <section id="contact" class="contact">
+    <!-- İletişim Sayfası -->
+    <section id="contact" class="page">
         <div class="container">
             <h2 class="section-title">İletişime Geçin</h2>
             <div class="contact-content">
@@ -350,7 +290,7 @@
                             <span class="contact-icon">📧</span>
                             <div>
                                 <h4>E-posta</h4>
-                                <p><a href="yesin.mehmet@ogr.ahievran.edu.tr">yesin.mehmet@ogr.ahievran.edu.tr</a></p>
+                                <p><a href="mailto:yesin.mehmet@ogr.ahievran.edu.tr">yesin.mehmet@ogr.ahievran.edu.tr</a></p>
                             </div>
                         </div>
                         <div class="contact-item">
@@ -380,7 +320,7 @@
                     </div>
                 </div>
 
-                <form class="contact-form" id="contactForm">
+                <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
                     <div class="form-group">
                         <label for="name">Adınız</label>
                         <input type="text" id="name" name="name" required>
@@ -414,17 +354,17 @@
                 <div class="footer-section">
                     <h4>Hızlı Linkler</h4>
                     <ul>
-                        <li><a href="#home">Ana Sayfa</a></li>
-                        <li><a href="#about">Hakkında</a></li>
-                        <li><a href="#projects">Projeler</a></li>
-                        <li><a href="#contact">İletişim</a></li>
+                        <li><a href="#" onclick="goToPage('home')">Ana Sayfa</a></li>
+                        <li><a href="#" onclick="goToPage('about')">Hakkında</a></li>
+                        <li><a href="#" onclick="goToPage('projects')">Projeler</a></li>
+                        <li><a href="#" onclick="goToPage('contact')">İletişim</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Sosyal Medya</h4>
                     <ul>
-                        <li><a href="m.yesnn">LinkedIn</a></li>
-                        <li><a href="mehmetyesn">GitHub</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">GitHub</a></li>
                         <li><a href="#">Twitter</a></li>
                     </ul>
                 </div>
@@ -438,4 +378,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
