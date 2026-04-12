@@ -1,1 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeler - Mehmet Yeşin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigasyon -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <span class="logo-icon">▲</span>
+                    <span class="logo-text">Portfolio</span>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="about.html" class="nav-link">Hakkında</a></li>
+                    <li><a href="projects.html" class="nav-link active">Projeler</a></li>
+                    <li><a href="services.html" class="nav-link">Hizmetler</a></li>
+                    <li><a href="contact.html" class="nav-link">İletişim</a></li>
+                </ul>
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title">Projeler<span class="highlight">im</span></h1>
+            <p class="page-subtitle">Yaptığım çalışmaların ve projelerin bir kısmı</p>
+        </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterProjects('all')">Tümü</button>
+                <button class="filter-btn" onclick="filterProjects('web')">Web</button>
+                <button class="filter-btn" onclick="filterProjects('design')">Tasarım</button>
+                <button class="filter-btn" onclick="filterProjects('app')">Uygulama</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="page-content">
+        <div class="container">
+            <div class="projects-grid" id="projectsGrid">
+                <div class="project-card" data-category="web">
+                    <div class="project-image">🛍️</div>
+                    <div class="project-info">
+                        <h3>E-Ticaret Sitesi</h3>
+                        <p>Modern ve responsive e-ticaret platformu. React ve Node.js ile geliştirildi.</p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="design">
+                    <div class="project-image">📱</div>
+                    <div class="project-info">
+                        <h3>Mobil Uygulama Tasarımı</h3>
+                        <p>iOS ve Android için modern mobil uygulama arayüz tasarımı.</p>
+                        <div class="project-tags">
+                            <span class="tag">Figma</span>
+                            <span class="tag">UI/UX</span>
+                            <span class="tag">Mobile</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="web">
+                    <div class="project-image">🏢</div>
+                    <div class="project-info">
+                        <h3>Kurumsal Web Sitesi</h3>
+                        <p>Şirket tanıtım sitesi. SEO optimizasyonu ve hızlı yükleme süresi.</p>
+                        <div class="project-tags">
+                            <span class="tag">HTML/CSS</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">SEO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="app">
+                    <div class="project-image">👥</div>
+                    <div class="project-info">
+                        <h3>Sosyal Medya Uygulaması</h3>
+                        <p>Gerçek zamanlı sohbet ve paylaşım özelliği olan sosyal ağ uygulaması.</p>
+                        <div class="project-tags">
+                            <span class="tag">React Native</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">Real-time</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="design">
+                    <div class="project-image">🎨</div>
+                    <div class="project-info">
+                        <h3>Grafik Tasarım Koleksiyonu</h3>
+                        <p>Çeşitli markalar için logo ve grafik tasarım çalışmaları.</p>
+                        <div class="project-tags">
+                            <span class="tag">Logo</span>
+                            <span class="tag">Branding</span>
+                            <span class="tag">Illustrator</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="web">
+                    <div class="project-image">📝</div>
+                    <div class="project-info">
+                        <h3>Blog Platformu</h3>
+                        <p>Yazılar, yorum ve kategori yönetimi ile tam özellikli blog sistemi.</p>
+                        <div class="project-tags">
+                            <span class="tag">Django</span>
+                            <span class="tag">PostgreSQL</span>
+                            <span class="tag">CMS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Portfolio</h4>
+                    <p>Yaratıcı dijital çözümler sunuyorum.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Hızlı Linkler</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="about.html">Hakkında</a></li>
+                        <li><a href="projects.html">Projeler</a></li>
+                        <li><a href="contact.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Sosyal Medya</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mehmet Yeşin. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
 
