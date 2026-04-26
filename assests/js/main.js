@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             menuToggle.classList.toggle('active');
         });
     }
+    
 
     // Menü linklerine tıklandığında menüyü kapat
     const navLinks = document.querySelectorAll('.nav-link');
