@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hizmetler - Mehmet Yeşin</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ── KART ──────────────────────────────── */
+        .service-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Favori butonu – sağ üst köşe */
+        .fav-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            background: white;
+            font-size: 17px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 1;
+        }
+        .fav-btn:hover          { border-color: #f59e0b; transform: scale(1.12); }
+        .fav-btn.fav-active     { border-color: #f59e0b; background: #fffbeb; }
+
+        /* Kart alt alanı: fiyat + butonlar */
+        .card-footer {
+            margin-top: auto;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .svc-price {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .svc-duration {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-cart {
+            flex: 1;
+            padding: 9px 0;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-cart:hover              { background: var(--primary-dark); transform: translateY(-1px); }
+        .btn-cart.in-cart            { background: #16a34a; }
+        .btn-cart.in-cart:hover      { background: #15803d; }
+
+        /* ── ÜST BAR (filtre + rozetler) ──────── */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .badge-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .badge-pill {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 16px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.25s;
+            background: white;
+        }
+        .badge-pill.fav-pill  { border-color: #f59e0b; color: #92400e; }
+        .badge-pill.fav-pill:hover  { background: #fef3c7; }
+        .badge-pill.cart-pill { border-color: var(--primary); color: var(--primary); }
+        .badge-pill.cart-pill:hover { background: var(--primary); color: white; }
+
+        .badge-pill .num {
+            min-width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .fav-pill  .num { background: #f59e0b; color: white; }
+        .cart-pill .num { background: var(--primary); color: white; }
+
+        /* ── PANEL (sağdan açılan drawer) ─────── */
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+            z-index: 3000;
+            display: none;
+            backdrop-filter: blur(3px);
+        }
+        .drawer-overlay.open { display: block; }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 380px;
+            max-width: 95vw;
+            height: 100%;
+            background: white;
+            box-shadow: -6px 0 40px rgba(0,0,0,0.15);
+            z-index: 3001;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .drawer.open { right: 0; }
+
+        .drawer-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 22px;
+            border-bottom: 1px solid var(--border);
+        }
+        .drawer-head h3 { font-size: 17px; color: var(--text-dark); margin: 0; }
+
+        .drawer-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: var(--text-light);
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .drawer-close:hover { color: var(--text-dark); }
+
+        .drawer-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .drawer-empty {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-light);
+            font-size: 15px;
+        }
+        .drawer-empty span { font-size: 40px; display: block; margin-bottom: 12px; }
+
+        /* Drawer öğe */
+        .drawer-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            background: #fafafa;
+            animation: scaleIn 0.25s ease-out;
+        }
+        .di-icon  { font-size: 28px; flex-shrink: 0; }
+        .di-info  { flex: 1; min-width: 0; }
+        .di-title { font-weight: 700; font-size: 14px; color: var(--text-dark); margin-bottom: 3px; }
+        .di-price { font-size: 12px; color: var(--primary); font-weight: 600; }
+        .di-rm {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #ef4444;
+            font-size: 16px;
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+        .di-rm:hover { transform: scale(1.2); }
+
+        /* Sepet drawer'ı alt toplam */
+        .drawer-foot {
+            border-top: 1px solid var(--border);
+            padding: 18px 22px;
+        }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 15px;
+        }
+        .cart-total span { color: var(--primary); font-size: 17px; }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .btn-checkout:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+        /* ── ÖDEME MODALI ───────────────────────── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 5000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            padding: 20px;
+        }
+        .modal-overlay.open { display: flex; }
+
+        .modal-box {
+            background: white;
+            border-radius: 18px;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+            animation: modalPop 0.3s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes modalPop {
+            from { opacity:0; transform: scale(0.85); }
+            to   { opacity:1; transform: scale(1); }
+        }
+
+        .modal-head {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 28px 28px 22px;
+            color: white;
+            text-align: center;
+        }
+        .modal-head .modal-icon { font-size: 48px; display: block; margin-bottom: 10px; }
+        .modal-head h3 { font-size: 20px; margin: 0 0 6px; }
+        .modal-head p  { font-size: 13px; opacity: 0.85; margin: 0; }
+
+        .modal-body { padding: 24px 28px; }
+
+        .modal-services-list {
+            background: #f8faff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 18px;
+        }
+        .modal-services-list h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-light);
+            margin: 0 0 10px;
+        }
+        .modal-svc-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .modal-svc-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .modal-svc-item .svc-em { font-size: 18px; }
+
+        .modal-info-note {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #78350f;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .modal-info-note span { font-size: 18px; flex-shrink: 0; }
+
+        .modal-actions { display: flex; gap: 10px; }
+
+        .btn-modal-confirm {
+            flex: 1;
+            padding: 13px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .btn-modal-confirm:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+        .btn-modal-cancel {
+            padding: 13px 20px;
+            background: none;
+            color: var(--text-light);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-modal-cancel:hover { border-color: var(--text-light); color: var(--text-dark); }
+
+        /* ── BAŞARI EKRANI ─────────────────────── */
+        .success-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 28px 36px;
+        }
+        .success-screen.show { display: block; }
+        .success-anim {
+            width: 80px; height: 80px;
+            background: #dcfce7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            margin: 0 auto 20px;
+            animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes popIn {
+            from { transform: scale(0); }
+            to   { transform: scale(1); }
+        }
+        .success-screen h3 { font-size: 22px; color: var(--text-dark); margin-bottom: 10px; }
+        .success-screen p  { color: var(--text-light); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+        .success-ordered {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #166534;
+            text-align: left;
+        }
+        .btn-modal-done {
+            display: inline-block;
+            padding: 12px 32px;
+            background: #16a34a;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-modal-done:hover { background: #15803d; transform: translateY(-1px); }
+
+        /* ── TOAST ─────────────────────────────── */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(60px);
+            background: var(--text-dark);
+            color: white;
+            padding: 11px 22px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 9999;
+            white-space: nowrap;
+        }
+        .toast-msg.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ── RESPONSIVE ─────────────────────────── */
+        @media (max-width: 600px) {
+            .badge-group { gap: 6px; }
+            .badge-pill  { padding: 6px 12px; font-size: 12px; }
+            .top-bar     { gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <span class="logo-icon">▲</span>
+                    <span class="logo-text">Portfolio</span>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html"    class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="about.html"    class="nav-link">Hakkında</a></li>
+                    <li><a href="projects.html" class="nav-link">Projeler</a></li>
+                    <li><a href="services.html" class="nav-link active">Hizmetler</a></li>
+                    <li><a href="contact.html"  class="nav-link">İletişim</a></li>
+                </ul>
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title">Sunduğum <span class="highlight">Hizmetler</span></h1>
+            <p class="page-subtitle">Profesyonel ve kaliteli hizmetler sunuyorum</p>
+        </div>
+    </section>
+
+    <!-- FİLTRE + ROZETLER -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="top-bar">
+                <div class="filter-buttons" id="filterButtons">
+                    <button class="filter-btn active" data-cat="all">Tümü</button>
+                    <button class="filter-btn" data-cat="design">Tasarım</button>
+                    <button class="filter-btn" data-cat="development">Geliştirme</button>
+                    <button class="filter-btn" data-cat="mobile">Mobil</button>
+                    <button class="filter-btn" data-cat="seo">SEO</button>
+                    <button class="filter-btn" data-cat="support">Destek</button>
+                </div>
+                <div class="badge-group">
+                    <button class="badge-pill fav-pill"  id="openFavDrawer">
+                        ⭐ Favoriler <span class="num" id="favCount">0</span>
+                    </button>
+                    <button class="badge-pill cart-pill" id="openCartDrawer">
+                        🛒 Sepet <span class="num" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HİZMET KARTLARI -->
+    <section class="page-content">
+        <div class="container">
+            <div class="services-grid" id="servicesGrid"></div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Bir Proje Hakkında Konuşmak İster misiniz?</h2>
+                <p>İhtiyaçlarınız hakkında konuşmak için iletişime geçin.</p>
+                <a href="contact.html" class="btn btn-primary">İletişime Geç</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Portfolio</h4>
+                    <p>Yaratıcı dijital çözümler sunuyorum.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Hızlı Linkler</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="about.html">Hakkında</a></li>
+                        <li><a href="projects.html">Projeler</a></li>
+                        <li><a href="contact.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Sosyal Medya</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mehmet Yeşin. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FAVORİLER DRAWER -->
+    <div class="drawer-overlay" id="favOverlay"></div>
+    <div class="drawer" id="favDrawer">
+        <div class="drawer-head">
+            <h3>⭐ Favori Hizmetlerim</h3>
+            <button class="drawer-close" id="closeFavDrawer">✕</button>
+        </div>
+        <div class="drawer-body" id="favDrawerBody"></div>
+    </div>
+
+    <!-- SEPET DRAWER -->
+    <div class="drawer-overlay" id="cartOverlay"></div>
+    <div class="drawer" id="cartDrawer">
+        <div class="drawer-head">
+            <h3>🛒 Sepetim</h3>
+            <button class="drawer-close" id="closeCartDrawer">✕</button>
+        </div>
+        <div class="drawer-body" id="cartDrawerBody"></div>
+        <div class="drawer-foot" id="cartDrawerFoot" style="display:none;">
+            <div class="cart-total">
+                Toplam <span id="cartTotal">—</span>
+            </div>
+            <button class="btn-checkout" onclick="handleCheckout()">✅ Hizmet Al</button>
+        </div>
+    </div>
+
+    <!-- ÖDEME MODALI -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-box" id="checkoutModalBox">
+            <!-- Onay Ekranı -->
+            <div id="confirmScreen">
+                <div class="modal-head">
+                    <span class="modal-icon">🛒</span>
+                    <h3>Siparişinizi Onaylayın</h3>
+                    <p>Aşağıdaki hizmetleri satın almak üzeresiniz</p>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-services-list">
+                        <h4>Seçilen Hizmetler</h4>
+                        <div id="modalServicesList"></div>
+                    </div>
+                    <div class="modal-info-note">
+                        <span>ℹ️</span>
+                        <span>Siparişiniz alındıktan sonra <strong>en kısa sürede</strong> sizinle iletişime geçeceğim. Ödeme detayları ve proje süreci hakkında bilgilendirileceksiniz.</span>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-modal-cancel" onclick="closeCheckoutModal()">Vazgeç</button>
+                        <button class="btn-modal-confirm" onclick="confirmOrder()">✅ Siparişi Onayla</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Başarı Ekranı -->
+            <div class="success-screen" id="successScreen">
+                <div class="success-anim">✓</div>
+                <h3>Siparişiniz Alındı!</h3>
+                <p>Hizmet talebiniz başarıyla iletildi.<br>En kısa sürede sizinle iletişime geçeceğim.</p>
+                <div class="success-ordered" id="successOrderedList"></div>
+                <button class="btn-modal-done" onclick="finishOrder()">Tamam</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast-msg" id="toastMsg"></div>
+
+    <script src="script.js"></script>
+    <script>
+    // ================================================================
+    //  VERİ  (JSON dosyası yerine JS içinde — file:// ile çalışır)
+    // ================================================================
+    var SERVICES = [
+        {
+            id: 1, category: "design", icon: "🎨",
+            title: "Web Tasarımı",
+            description: "Modern, responsive ve kullanıcı dostu web arayüzleri tasarlıyorum.",
+            features: ["UI/UX Tasarım", "Wireframing", "Prototyping", "Responsive Design"],
+            price: "₺2.500'den başlayan", duration: "1-2 hafta"
+        },
+        {
+            id: 2, category: "development", icon: "💻",
+            title: "Frontend Geliştirme",
+            description: "HTML, CSS, JavaScript ve React ile profesyonel web uygulamaları geliştiririm.",
+            features: ["HTML / CSS", "JavaScript", "React", "Performance Optimization"],
+            price: "₺3.000'den başlayan", duration: "2-4 hafta"
+        },
+        {
+            id: 3, category: "mobile", icon: "📱",
+            title: "Mobil Uygulama",
+            description: "iOS ve Android için native ve cross-platform uygulamalar geliştiririm.",
+            features: ["React Native", "Flutter", "UI/UX", "App Store Deployment"],
+            price: "₺5.000'den başlayan", duration: "4-8 hafta"
+        },
+        {
+            id: 4, category: "seo", icon: "🔍",
+            title: "SEO Optimizasyonu",
+            description: "Web sitenizi arama motorlarında üst sıralara çıkarmak için SEO hizmetleri sunuyorum.",
+            features: ["On-page SEO", "Technical SEO", "Content Optimization", "Analytics"],
+            price: "₺1.500'den başlayan", duration: "Aylık"
+        },
+        {
+            id: 5, category: "development", icon: "⚡",
+            title: "Performans Optimizasyonu",
+            description: "Web sitenizin hızını ve performansını maksimum seviyeye çıkarıyorum.",
+            features: ["Image Optimization", "Caching", "Code Minification", "CDN Integration"],
+            price: "₺1.000'den başlayan", duration: "3-5 gün"
+        },
+        {
+            id: 6, category: "support", icon: "🛠️",
+            title: "Teknik Destek",
+            description: "Projeleriniz için sürekli teknik destek ve bakım hizmetleri sağlıyorum.",
+            features: ["Bug Fixing", "Updates", "Maintenance", "7/24 Destek"],
+            price: "₺800/ay'dan başlayan", duration: "Sürekli"
+        }
+    ];
+
+    // ================================================================
+    //  localStorage — FAVORİLER
+    // ================================================================
+    var FAV_KEY  = 'portfolio_favs';
+    var CART_KEY = 'portfolio_cart';
+
+    function getFavs()  { try { return JSON.parse(localStorage.getItem(FAV_KEY))  || []; } catch(e) { return []; } }
+    function getCart()  { try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch(e) { return []; } }
+    function setFavs(a) { localStorage.setItem(FAV_KEY,  JSON.stringify(a)); }
+    function setCart(a) { localStorage.setItem(CART_KEY, JSON.stringify(a)); }
+
+    function isFav(id)  { return getFavs().indexOf(id)  !== -1; }
+    function inCart(id) { return getCart().indexOf(id) !== -1; }
+
+    function toggleFav(id) {
+        var a = getFavs(), i = a.indexOf(id);
+        if (i === -1) { a.push(id); setFavs(a); return true; }
+        a.splice(i,1); setFavs(a); return false;
+    }
+
+    function toggleCart(id) {
+        var a = getCart(), i = a.indexOf(id);
+        if (i === -1) { a.push(id); setCart(a); return true; }
+        a.splice(i,1); setCart(a); return false;
+    }
+
+    function removeFromFav(id)  { var a = getFavs().filter(function(x){return x!==id;}); setFavs(a); }
+    function removeFromCart(id) { var a = getCart().filter(function(x){return x!==id;}); setCart(a); }
+
+    // ================================================================
+    //  SAYAÇLAR
+    // ================================================================
+    function updateCounts() {
+        document.getElementById('favCount').textContent  = getFavs().length;
+        document.getElementById('cartCount').textContent = getCart().length;
+    }
+
+    // ================================================================
+    //  TOAST
+    // ================================================================
+    function toast(msg) {
+        var t = document.getElementById('toastMsg');
+        t.textContent = msg;
+        t.classList.add('show');
+        clearTimeout(t._t);
+        t._t = setTimeout(function(){ t.classList.remove('show'); }, 2000);
+    }
+
+    // ================================================================
+    //  KART OLUŞTUR
+    // ================================================================
+    function buildCard(svc) {
+        var faved  = isFav(svc.id);
+        var carded = inCart(svc.id);
+
+        var card = document.createElement('div');
+        card.className = 'service-card';
+        card.dataset.category = svc.category;
+        card.dataset.id = String(svc.id);
+
+        // — Favori butonu
+        var favBtn = document.createElement('button');
+        favBtn.className = 'fav-btn' + (faved ? ' fav-active' : '');
+        favBtn.title = faved ? 'Favorilerden çıkar' : 'Favorilere ekle';
+        favBtn.textContent = faved ? '⭐' : '☆';
+
+        favBtn.addEventListener('click', function(){
+            var added = toggleFav(svc.id);
+            favBtn.textContent = added ? '⭐' : '☆';
+            favBtn.className   = 'fav-btn' + (added ? ' fav-active' : '');
+            favBtn.title       = added ? 'Favorilerden çıkar' : 'Favorilere ekle';
+            toast(added ? '⭐ Favorilere eklendi!' : 'Favorilerden çıkarıldı');
+            updateCounts();
+            if (document.getElementById('favDrawer').classList.contains('open')) renderFavDrawer();
+        });
+
+        // — İkon
+        var iconEl = document.createElement('div');
+        iconEl.className = 'service-icon';
+        iconEl.textContent = svc.icon;
+
+        // — Başlık
+        var h3 = document.createElement('h3');
+        h3.textContent = svc.title;
+
+        // — Açıklama
+        var desc = document.createElement('p');
+        desc.textContent = svc.description;
+
+        // — Özellik listesi
+        var ul = document.createElement('ul');
+        ul.className = 'service-list';
+        svc.features.forEach(function(f){
+            var li = document.createElement('li');
+            li.textContent = '✓ ' + f;
+            ul.appendChild(li);
+        });
+
+        // — Alt alan (fiyat + butonlar)
+        var footer = document.createElement('div');
+        footer.className = 'card-footer';
+
+        var priceRow = document.createElement('div');
+        priceRow.className = 'card-price-row';
+
+        var priceEl = document.createElement('span');
+        priceEl.className = 'svc-price';
+        priceEl.textContent = svc.price;
+
+        var durEl = document.createElement('span');
+        durEl.className = 'svc-duration';
+        durEl.textContent = '🕐 ' + svc.duration;
+
+        priceRow.appendChild(priceEl);
+        priceRow.appendChild(durEl);
+
+        // — Sepete ekle butonu
+        var actions = document.createElement('div');
+        actions.className = 'card-actions';
+
+        var cartBtn = document.createElement('button');
+        cartBtn.className = 'btn-cart' + (carded ? ' in-cart' : '');
+        cartBtn.innerHTML  = carded ? '✓ Sepette' : '🛒 Sepete Ekle';
+
+        cartBtn.addEventListener('click', function(){
+            var added = toggleCart(svc.id);
+            cartBtn.className = 'btn-cart' + (added ? ' in-cart' : '');
+            cartBtn.innerHTML  = added ? '✓ Sepette' : '🛒 Sepete Ekle';
+            toast(added ? '🛒 Sepete eklendi!' : 'Sepetten çıkarıldı');
+            updateCounts();
+            if (document.getElementById('cartDrawer').classList.contains('open')) renderCartDrawer();
+        });
+
+        actions.appendChild(cartBtn);
+        footer.appendChild(priceRow);
+        footer.appendChild(actions);
+
+        card.appendChild(favBtn);
+        card.appendChild(iconEl);
+        card.appendChild(h3);
+        card.appendChild(desc);
+        card.appendChild(ul);
+        card.appendChild(footer);
+
+        return card;
+    }
+
+    // ================================================================
+    //  GRİD RENDER
+    // ================================================================
+    function renderGrid(cat) {
+        var grid = document.getElementById('servicesGrid');
+        grid.innerHTML = '';
+        var list = cat === 'all' ? SERVICES : SERVICES.filter(function(s){ return s.category === cat; });
+        list.forEach(function(svc){ grid.appendChild(buildCard(svc)); });
+    }
+
+    // ================================================================
+    //  DRAWER YARDIMCI
+    // ================================================================
+    function openDrawer(drawerId, overlayId) {
+        document.getElementById(drawerId).classList.add('open');
+        document.getElementById(overlayId).classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer(drawerId, overlayId) {
+        document.getElementById(drawerId).classList.remove('open');
+        document.getElementById(overlayId).classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function makeDrawerItem(svc, onRemove) {
+        var item = document.createElement('div');
+        item.className = 'drawer-item';
+
+        var icon = document.createElement('span');
+        icon.className = 'di-icon';
+        icon.textContent = svc.icon;
+
+        var info = document.createElement('div');
+        info.className = 'di-info';
+
+        var t = document.createElement('div');
+        t.className = 'di-title';
+        t.textContent = svc.title;
+
+        var p = document.createElement('div');
+        p.className = 'di-price';
+        p.textContent = svc.price;
+
+        info.appendChild(t);
+        info.appendChild(p);
+
+        var rm = document.createElement('button');
+        rm.className = 'di-rm';
+        rm.title = 'Kaldır';
+        rm.textContent = '✕';
+        rm.addEventListener('click', onRemove);
+
+        item.appendChild(icon);
+        item.appendChild(info);
+        item.appendChild(rm);
+        return item;
+    }
+
+    function emptyState(icon, msg) {
+        var d = document.createElement('div');
+        d.className = 'drawer-empty';
+        d.innerHTML = '<span>' + icon + '</span>' + msg;
+        return d;
+    }
+
+    // ================================================================
+    //  FAVORİLER DRAWER
+    // ================================================================
+    function renderFavDrawer() {
+        var body   = document.getElementById('favDrawerBody');
+        body.innerHTML = '';
+        var favIds = getFavs();
+
+        if (!favIds.length) {
+            body.appendChild(emptyState('☆', 'Henüz favori eklemediniz.<br>Kartlardaki ☆ ikonuna tıklayın.'));
+            return;
+        }
+
+        favIds.forEach(function(id){
+            var svc = SERVICES.filter(function(s){ return s.id === id; })[0];
+            if (!svc) return;
+
+            var item = makeDrawerItem(svc, function(){
+                removeFromFav(svc.id);
+                // Karttaki ikonu güncelle
+                var card = document.querySelector('.service-card[data-id="' + svc.id + '"]');
+                if (card) {
+                    var btn = card.querySelector('.fav-btn');
+                    btn.textContent = '☆';
+                    btn.className   = 'fav-btn';
+                    btn.title       = 'Favorilere ekle';
+                }
+                updateCounts();
+                renderFavDrawer();
+                toast('Favorilerden çıkarıldı');
+            });
+            body.appendChild(item);
+        });
+    }
+
+    // ================================================================
+    //  SEPET DRAWER
+    // ================================================================
+    function renderCartDrawer() {
+        var body    = document.getElementById('cartDrawerBody');
+        var foot    = document.getElementById('cartDrawerFoot');
+        body.innerHTML = '';
+        var cartIds = getCart();
+
+        if (!cartIds.length) {
+            body.appendChild(emptyState('🛒', 'Sepetiniz boş.<br>Kartlardaki "Sepete Ekle" butonunu kullanın.'));
+            foot.style.display = 'none';
+            return;
+        }
+
+        cartIds.forEach(function(id){
+            var svc = SERVICES.filter(function(s){ return s.id === id; })[0];
+            if (!svc) return;
+
+            var item = makeDrawerItem(svc, function(){
+                removeFromCart(svc.id);
+                // Karttaki butonu güncelle
+                var card = document.querySelector('.service-card[data-id="' + svc.id + '"]');
+                if (card) {
+                    var btn = card.querySelector('.btn-cart');
+                    btn.className = 'btn-cart';
+                    btn.innerHTML = '🛒 Sepete Ekle';
+                }
+                updateCounts();
+                renderCartDrawer();
+                toast('Sepetten çıkarıldı');
+            });
+            body.appendChild(item);
+        });
+
+        // Toplam
+        document.getElementById('cartTotal').textContent = cartIds.length + ' hizmet';
+        foot.style.display = 'block';
+    }
+
+    // ================================================================
+    //  CHECKOUT — MODAL
+    // ================================================================
+    function handleCheckout() {
+        var cartIds = getCart();
+        if (!cartIds.length) return;
+
+        // Seçilen hizmetleri modal listesine yaz
+        var listEl = document.getElementById('modalServicesList');
+        listEl.innerHTML = '';
+        cartIds.forEach(function(id) {
+            var svc = SERVICES.filter(function(x){ return x.id === id; })[0];
+            if (!svc) return;
+            var item = document.createElement('div');
+            item.className = 'modal-svc-item';
+            item.innerHTML = '<span class="svc-em">' + svc.icon + '</span>'
+                           + '<span><strong>' + svc.title + '</strong> — <em>' + svc.price + '</em></span>';
+            listEl.appendChild(item);
+        });
+
+        // Onay ekranını göster, başarı ekranını gizle
+        document.getElementById('confirmScreen').style.display = 'block';
+        document.getElementById('successScreen').classList.remove('show');
+
+        document.getElementById('checkoutModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCheckoutModal() {
+        document.getElementById('checkoutModal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function confirmOrder() {
+        var cartIds = getCart();
+        var names = cartIds.map(function(id){
+            var s = SERVICES.filter(function(x){ return x.id === id; })[0];
+            return s ? (s.icon + ' ' + s.title) : '';
+        });
+
+        // Başarı listesi
+        var ordEl = document.getElementById('successOrderedList');
+        ordEl.innerHTML = '<strong>📋 Sipariş Özeti:</strong><br>' + names.join('<br>');
+
+        // Ekran geçişi
+        document.getElementById('confirmScreen').style.display = 'none';
+        document.getElementById('successScreen').classList.add('show');
+    }
+
+    function finishOrder() {
+        // Sepeti temizle
+        setCart([]);
+        updateCounts();
+        renderCartDrawer();
+
+        // Kartlardaki butonları sıfırla
+        document.querySelectorAll('.btn-cart.in-cart').forEach(function(btn){
+            btn.className = 'btn-cart';
+            btn.innerHTML = '🛒 Sepete Ekle';
+        });
+
+        closeCheckoutModal();
+        // Sepet drawer'ı da kapat
+        closeDrawer('cartDrawer', 'cartOverlay');
+        toast('✅ Siparişiniz alındı! En kısa sürede iletişime geçeceğim.');
+    }
+
+    // ================================================================
+    //  SAYFA BAŞLANGIÇ
+    // ================================================================
+    document.addEventListener('DOMContentLoaded', function(){
+        var activeCat = 'all';
+        renderGrid(activeCat);
+        updateCounts();
+
+        // Filtre
+        var filterBtns = document.querySelectorAll('#filterButtons .filter-btn');
+        filterBtns.forEach(function(btn){
+            btn.addEventListener('click', function(){
+                filterBtns.forEach(function(b){ b.classList.remove('active'); });
+                btn.classList.add('active');
+                activeCat = btn.getAttribute('data-cat');
+                renderGrid(activeCat);
+            });
+        });
+
+        // Favoriler drawer
+        document.getElementById('openFavDrawer').addEventListener('click', function(){
+            renderFavDrawer();
+            openDrawer('favDrawer', 'favOverlay');
+        });
+        document.getElementById('closeFavDrawer').addEventListener('click', function(){ closeDrawer('favDrawer', 'favOverlay'); });
+        document.getElementById('favOverlay').addEventListener('click',      function(){ closeDrawer('favDrawer', 'favOverlay'); });
+
+        // Sepet drawer
+        document.getElementById('openCartDrawer').addEventListener('click', function(){
+            renderCartDrawer();
+            openDrawer('cartDrawer', 'cartOverlay');
+        });
+        document.getElementById('closeCartDrawer').addEventListener('click', function(){ closeDrawer('cartDrawer', 'cartOverlay'); });
+        document.getElementById('cartOverlay').addEventListener('click',     function(){ closeDrawer('cartDrawer', 'cartOverlay'); });
+    });
+    </script>
+</body>
+</html>
