@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hizmetler - Mehmet Yeşin</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .services-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .search-input-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+        }
+        .search-input-wrapper .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        #serviceSearch {
+            width: 100%;
+            padding: 11px 15px 11px 40px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        #serviceSearch:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        #priceSortSelect {
+            padding: 11px 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            background: white;
+        }
+        #priceSortSelect:focus { outline: none; border-color: var(--primary); }
+        .service-price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        .service-duration {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+        .service-list li::before { content: '✓ '; color: var(--primary); font-weight: bold; }
+        .loading-placeholder {
+            text-align: center;
+            padding: 60px;
+            color: var(--text-light);
+            grid-column: 1 / -1;
+        }
+        .no-results {
+            text-align: center;
+            padding: 60px;
+            color: var(--text-light);
+            display: none;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">▲</span>
+                    <span class="logo-text">Portfolio</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="about.html" class="nav-link">Hakkında</a></li>
+                    <li><a href="projects.html" class="nav-link">Projeler</a></li>
+                    <li><a href="services.html" class="nav-link active">Hizmetler</a></li>
+                    <li><a href="contact.html" class="nav-link">İletişim</a></li>
+                    <li><a href="auth.html" class="nav-link nav-link-auth">Giriş Yap</a></li>
+                </ul>
+                <button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç/kapat">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title">Hizmet<span class="highlight">lerim</span></h1>
+            <p class="page-subtitle">Size sunduğum profesyonel hizmetler</p>
+        </div>
+    </section>
+
+    <section class="filter-section">
+        <div class="container">
+            <div class="services-controls">
+                <div class="search-input-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="serviceSearch" placeholder="Hizmet ara...">
+                </div>
+                <select id="priceSortSelect">
+                    <option value="default">Varsayılan Sıra</option>
+                    <option value="asc">Fiyat: Düşükten Yükseğe</option>
+                    <option value="desc">Fiyat: Yüksekten Düşüğe</option>
+                </select>
+            </div>
+            <div class="filter-buttons" id="categoryFilters">
+                <button class="filter-btn active" data-category="all">Tümü</button>
+                <button class="filter-btn" data-category="design">Tasarım</button>
+                <button class="filter-btn" data-category="development">Geliştirme</button>
+                <button class="filter-btn" data-category="mobile">Mobil</button>
+                <button class="filter-btn" data-category="seo">SEO</button>
+                <button class="filter-btn" data-category="support">Destek</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-content">
+        <div class="container">
+            <div class="services-grid" id="servicesGrid">
+                <div class="loading-placeholder">⏳ Hizmetler yükleniyor...</div>
+            </div>
+            <div class="no-results" id="noResults">
+                <p>🔍 Arama kriterlerine uygun hizmet bulunamadı.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Portfolio</h4>
+                    <p>Yaratıcı dijital çözümler sunuyorum.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Hızlı Linkler</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="about.html">Hakkında</a></li>
+                        <li><a href="projects.html">Projeler</a></li>
+                        <li><a href="contact.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Sosyal Medya</h4>
+                    <ul>
+                        <li><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></li>
+                        <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+                        <li><a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Mehmet Yeşin. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
