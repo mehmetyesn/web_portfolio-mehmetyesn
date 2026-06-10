@@ -728,3 +728,92 @@ document.addEventListener('DOMContentLoaded', function () {
         initWeatherWidget();
     }
 });
+
+
+// OpenWeatherMap API ve HTML Elementleri Entegrasyonu
+const apiKey = "1400638c79b2821a32598c0382eaa3d6";
+
+document.addEventListener("DOMContentLoaded", () => {
+    const weatherBtn = document.getElementById("weatherBtn");
+    const weatherCityInput = document.getElementById("weatherCity");
+
+    // "Ara" butonuna tıklanınca çalışacak fonksiyon
+    if (weatherBtn) {
+        weatherBtn.addEventListener("click", () => {
+            getWeatherData();
+        });
+    }
+
+    // Input alanındayken Enter tuşuna basılırsa da arama yapsın
+    if (weatherCityInput) {
+        weatherCityInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                getWeatherData();
+            }
+        });
+    }
+});
+
+function getWeatherData() {
+    const city = document.getElementById("weatherCity").value.trim();
+    
+    // HTML elemanlarını seçiyoruz
+    const loadingDiv = document.getElementById("weatherLoading");
+    const infoDiv = document.getElementById("weatherInfo");
+    const errorDiv = document.getElementById("weatherError");
+    const errorMsg = document.getElementById("weatherErrorMsg");
+
+    if (!city) {
+        alert("Lütfen bir şehir adı girin!");
+        return;
+    }
+
+    // Durumları sıfırla ve yükleniyor ekranını göster
+    loadingDiv.style.display = "block";
+    infoDiv.style.display = "none";
+    errorDiv.style.display = "none";
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=tr`;
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 401) {
+                    throw new Error("API anahtarınız henüz aktifleşmemiş (Yeni anahtarların aktif olması 1-2 saat sürebilir).");
+                }
+                throw new Error("Şehir bulunamadı. Lütfen doğru yazdığınızdan emin olun.");
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Yükleniyor durumunu kapat
+            loadingDiv.style.display = "none";
+
+            // HTML elemanlarını API verileriyle doldur
+            document.getElementById("weatherCityName").innerText = `${data.name}, ${data.sys.country}`;
+            document.getElementById("weatherTemp").innerText = `${Math.round(data.main.temp)}°C`;
+            document.getElementById("weatherDesc").innerText = data.weather[0].description.toUpperCase();
+            document.getElementById("weatherFeelsLike").innerText = `${Math.round(data.main.feels_like)}°C`;
+            document.getElementById("weatherHumidity").innerText = `%${data.main.humidity}`;
+            document.getElementById("weatherWind").innerText = `${data.wind.speed} m/s`;
+            document.getElementById("weatherPressure").innerText = `${data.main.pressure} hPa`;
+            document.getElementById("weatherVisibility").innerText = `${(data.visibility / 1000).toFixed(1)} km`;
+
+            // Hava durumu durumuna göre ikon güncellemesi (Opsiyonel emojiler)
+            const iconDiv = document.getElementById("weatherIcon");
+            const mainState = data.weather[0].main.toLowerCase();
+            if (mainState.includes("rain")) iconDiv.innerText = "🌧️";
+            else if (mainState.includes("cloud")) iconDiv.innerText = "☁️";
+            else if (mainState.includes("clear")) iconDiv.innerText = "☀️";
+            else if (mainState.includes("snow")) iconDiv.innerText = "❄️";
+            else iconDiv.innerText = "🌤️";
+
+            // Bilgi kartını görünür yap
+            infoDiv.style.display = "block";
+        })
+        .catch(error => {
+            loadingDiv.style.display = "none";
+            errorMsg.innerText = `❌ Hata: ${error.message}`;
+            errorDiv.style.display = "block";
+        });
+}
