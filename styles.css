@@ -1138,3 +1138,130 @@ body {
         padding: 3px 8px;
     }
 }
+
+/* --- Hava Durumu Bölümü Stilleri --- */
+.weather-section {
+    padding: 60px 0;
+    background-color: #f8f9fa; /* Sitenin alt temasına uygun açık gri */
+}
+
+.weather-container {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.weather-container h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.weather-subtitle {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.weather-search {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.weather-search input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.weather-search input:focus {
+    border-color: #000; /* Portfolyondaki siyah logoya uyum */
+}
+
+.weather-search button {
+    padding: 12px 25px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.weather-search button:hover {
+    background-color: #333;
+}
+
+/* Kart Sonuç Alanı */
+.weather-result {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.weather-card {
+    animation: fadeIn 0.5s ease-in-out;
+    width: 100%;
+}
+
+.weather-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.weather-city {
+    font-size: 20px;
+    color: #222;
+    margin: 5px 0;
+}
+
+.weather-temp {
+    font-size: 42px;
+    font-weight: 700;
+    color: #111;
+    margin: 10px 0;
+}
+
+.weather-desc {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    letter-spacing: 1px;
+}
+
+.weather-details {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+}
+
+.weather-error {
+    color: #d9534f;
+    font-weight: 500;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
