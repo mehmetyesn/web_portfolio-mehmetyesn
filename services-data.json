@@ -1,0 +1,64 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "category": "design",
+      "icon": "🎨",
+      "title": "Web Tasarımı",
+      "description": "Modern, responsive ve kullanıcı dostu web arayüzleri tasarlıyorum.",
+      "features": ["UI/UX Tasarım", "Wireframing", "Prototyping", "Responsive Design"],
+      "price": "₺2.500'den başlayan",
+      "duration": "1-2 hafta"
+    },
+    {
+      "id": 2,
+      "category": "development",
+      "icon": "💻",
+      "title": "Frontend Geliştirme",
+      "description": "HTML, CSS, JavaScript ve React ile profesyonel web uygulamaları geliştiririm.",
+      "features": ["HTML / CSS", "JavaScript", "React", "Performance Optimization"],
+      "price": "₺3.000'den başlayan",
+      "duration": "2-4 hafta"
+    },
+    {
+      "id": 3,
+      "category": "mobile",
+      "icon": "📱",
+      "title": "Mobil Uygulama",
+      "description": "iOS ve Android için native ve cross-platform mobil uygulamalar geliştiririm.",
+      "features": ["React Native", "Flutter", "UI/UX", "App Store Deployment"],
+      "price": "₺5.000'den başlayan",
+      "duration": "4-8 hafta"
+    },
+    {
+      "id": 4,
+      "category": "seo",
+      "icon": "🔍",
+      "title": "SEO Optimizasyonu",
+      "description": "Web sitenizi arama motorlarında üst sıralara çıkarmak için SEO hizmetleri sunuyorum.",
+      "features": ["On-page SEO", "Technical SEO", "Content Optimization", "Analytics"],
+      "price": "₺1.500'den başlayan",
+      "duration": "Aylık"
+    },
+    {
+      "id": 5,
+      "category": "development",
+      "icon": "⚡",
+      "title": "Performans Optimizasyonu",
+      "description": "Web sitenizin hızını ve performansını maksimum seviyeye çıkarıyorum.",
+      "features": ["Image Optimization", "Caching", "Code Minification", "CDN Integration"],
+      "price": "₺1.000'den başlayan",
+      "duration": "3-5 gün"
+    },
+    {
+      "id": 6,
+      "category": "support",
+      "icon": "🛠️",
+      "title": "Teknik Destek",
+      "description": "Projeleriniz için sürekli teknik destek ve bakım hizmetleri sağlıyorum.",
+      "features": ["Bug Fixing", "Updates", "Maintenance", "7/24 Destek"],
+      "price": "₺800/ay'dan başlayan",
+      "duration": "Sürekli"
+    }
+  ]
+}

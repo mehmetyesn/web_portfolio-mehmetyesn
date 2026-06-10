@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehmet Yeşin - Portfolyo</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">▲</span>
+                    <span class="logo-text">Portfolio</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link active">Ana Sayfa</a></li>
+                    <li><a href="about.html" class="nav-link">Hakkında</a></li>
+                    <li><a href="projects.html" class="nav-link">Projeler</a></li>
+                    <li><a href="services.html" class="nav-link">Hizmetler</a></li>
+                    <li><a href="contact.html" class="nav-link">İletişim</a></li>
+                    <li><a href="auth.html" class="nav-link nav-link-auth">Giriş Yap</a></li>
+                </ul>
+                <button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç/kapat">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Merhaba, Ben <span class="highlight">Mehmet YEŞİN</span></h1>
+                    <p class="hero-subtitle">Yaratıcı ve işlevsel dijital çözümler sunuyorum</p>
+                    <p class="hero-description">
+                        Web tasarım, UI/UX ve frontend geliştirme alanında çalışıyorum.
+                        Projelerinizi hayata geçirmek için buradayım. Ahi Evran Üniversitesi
+                        Bilgisayar Programcılığı bölümünde öğrenim görmekteyim.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="projects.html" class="btn btn-primary">Projelerime Bak</a>
+                        <a href="contact.html" class="btn btn-secondary">İletişime Geç</a>
+                    </div>
+                </div>
+                <div class="hero-illustration">
+                    <div class="illustration-box">
+                        <div class="illustration-content">
+                            <div class="profile-header">
+                                <div class="profile-avatar">M</div>
+                                <div class="profile-info">
+                                    <p class="profile-name">Mehmet YEŞİN</p>
+                                    <p class="profile-title">Web Developer &amp; Designer</p>
+                                </div>
+                            </div>
+                            <div class="profile-features">
+                                <div class="feature-item"><span class="feature-emoji">💻</span><span>Frontend Development</span></div>
+                                <div class="feature-item"><span class="feature-emoji">🎨</span><span>UI/UX Design</span></div>
+                                <div class="feature-item"><span class="feature-emoji">📱</span><span>Responsive Design</span></div>
+                                <div class="feature-item"><span class="feature-emoji">⚡</span><span>Performance</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hava Durumu Widget -->
+    <section class="page-content">
+        <div class="container">
+            <div class="weather-widget">
+                <div class="weather-header">
+                    <h3>🌤️ Hava Durumu</h3>
+                    <div class="search-input-wrapper" style="flex: 1; min-width: 200px;">
+                        <input type="text" id="weatherCity" placeholder="Şehir adı girin..." class="weather-input">
+                    </div>
+                    <button id="weatherBtn" class="weather-btn">Ara</button>
+                </div>
+                
+                <div id="weatherContent" class="weather-content">
+                    <div class="weather-loading" id="weatherLoading" style="display: none;">
+                        <p>⏳ Yükleniyor...</p>
+                    </div>
+                    
+                    <div id="weatherInfo" class="weather-info" style="display: none;">
+                        <div class="weather-main">
+                            <div class="weather-icon" id="weatherIcon">🌤️</div>
+                            <div class="weather-temp">
+                                <span id="weatherTemp" class="temp-value">--°C</span>
+                                <span id="weatherDesc" class="temp-desc">--</span>
+                            </div>
+                        </div>
+                        
+                        <div class="weather-details">
+                            <div class="weather-detail">
+                                <span class="detail-label">Şehir:</span>
+                                <span id="weatherCityName" class="detail-value">--</span>
+                            </div>
+                            <div class="weather-detail">
+                                <span class="detail-label">Hissedilen:</span>
+                                <span id="weatherFeelsLike" class="detail-value">--°C</span>
+                            </div>
+                            <div class="weather-detail">
+                                <span class="detail-label">Nem:</span>
+                                <span id="weatherHumidity" class="detail-value">--%</span>
+                            </div>
+                            <div class="weather-detail">
+                                <span class="detail-label">Rüzgar:</span>
+                                <span id="weatherWind" class="detail-value">-- m/s</span>
+                            </div>
+                            <div class="weather-detail">
+                                <span class="detail-label">Basınç:</span>
+                                <span id="weatherPressure" class="detail-value">-- hPa</span>
+                            </div>
+                            <div class="weather-detail">
+                                <span class="detail-label">Görüş:</span>
+                                <span id="weatherVisibility" class="detail-value">-- km</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="weatherError" class="weather-error" style="display: none;">
+                        <p id="weatherErrorMsg">❌ Hava durumu bilgisi alınamadı.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Portfolio</h4>
+                    <p>Yaratıcı dijital çözümler sunuyorum.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Hızlı Linkler</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="about.html">Hakkında</a></li>
+                        <li><a href="projects.html">Projeler</a></li>
+                        <li><a href="contact.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Sosyal Medya</h4>
+                    <ul>
+                        <li><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></li>
+                        <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+                        <li><a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Mehmet Yeşin. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

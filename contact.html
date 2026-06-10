@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim - Mehmet Yeşin</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">▲</span>
+                    <span class="logo-text">Portfolio</span>
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="about.html" class="nav-link">Hakkında</a></li>
+                    <li><a href="projects.html" class="nav-link">Projeler</a></li>
+                    <li><a href="services.html" class="nav-link">Hizmetler</a></li>
+                    <li><a href="contact.html" class="nav-link active">İletişim</a></li>
+                    <li><a href="auth.html" class="nav-link nav-link-auth">Giriş Yap</a></li>
+                </ul>
+                <button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç/kapat">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title">İletişime <span class="highlight">Geçin</span></h1>
+            <p class="page-subtitle">Bir proje hakkında konuşmak veya sorularınız varsa, lütfen iletişime geçin.</p>
+        </div>
+    </section>
+
+    <section class="page-content">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Bana Ulaşın</h2>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <div class="contact-item-text">
+                                <h4>E-posta</h4>
+                                <p><a href="mailto:yesin.mehmet@ogr.ahievran.edu.tr">yesin.mehmet@ogr.ahievran.edu.tr</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📱</span>
+                            <div class="contact-item-text">
+                                <h4>Telefon</h4>
+                                <p><a href="tel:+905437114588">+90 543 711 45 88</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <div class="contact-item-text">
+                                <h4>Adres</h4>
+                                <p>Kırşehir, Türkiye</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social-section">
+                        <h3>Sosyal Medya</h3>
+                        <div class="social-icons">
+                            <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-icon">LinkedIn</a>
+                            <a href="https://github.com" target="_blank" rel="noopener" class="social-icon">GitHub</a>
+                            <a href="https://twitter.com" target="_blank" rel="noopener" class="social-icon">Twitter</a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener" class="social-icon">Instagram</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper">
+                    <div class="contact-form">
+                        <div id="formMessage" style="display:none; margin-bottom:20px;"></div>
+
+                        <div class="form-group">
+                            <label for="name">Adınız</label>
+                            <input type="text" id="name" name="name" required placeholder="Adınızı girin">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-posta</label>
+                            <input type="email" id="email" name="email" required placeholder="E-posta adresinizi girin">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Konu</label>
+                            <input type="text" id="subject" name="subject" required placeholder="Konuyu girin">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mesaj</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Mesajınızı yazın..."></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="sendBtn" onclick="sendContact()">Mesaj Gönder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Portfolio</h4>
+                    <p>Yaratıcı dijital çözümler sunuyorum.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Hızlı Linkler</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="about.html">Hakkında</a></li>
+                        <li><a href="projects.html">Projeler</a></li>
+                        <li><a href="contact.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Sosyal Medya</h4>
+                    <ul>
+                        <li><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></li>
+                        <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+                        <li><a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Mehmet Yeşin. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

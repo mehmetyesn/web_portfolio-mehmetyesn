@@ -1,0 +1,55 @@
+<!-- Hava Durumu Widget -->
+<div class="weather-widget">
+    <div class="weather-header">
+        <h3>Hava Durumu</h3>
+        <input type="text" id="weatherCity" placeholder="Şehir adı girin..." class="weather-input">
+        <button id="weatherBtn" class="weather-btn">Ara</button>
+    </div>
+    
+    <div id="weatherContent" class="weather-content">
+        <div class="weather-loading" id="weatherLoading" style="display: none;">
+            <p>Yükleniyor...</p>
+        </div>
+        
+        <div id="weatherInfo" class="weather-info" style="display: none;">
+            <div class="weather-main">
+                <div class="weather-icon" id="weatherIcon">🌤️</div>
+                <div class="weather-temp">
+                    <span id="weatherTemp" class="temp-value">--°C</span>
+                    <span id="weatherDesc" class="temp-desc">--</span>
+                </div>
+            </div>
+            
+            <div class="weather-details">
+                <div class="weather-detail">
+                    <span class="detail-label">Şehir:</span>
+                    <span id="weatherCityName" class="detail-value">--</span>
+                </div>
+                <div class="weather-detail">
+                    <span class="detail-label">Hissedilen:</span>
+                    <span id="weatherFeelsLike" class="detail-value">--°C</span>
+                </div>
+                <div class="weather-detail">
+                    <span class="detail-label">Nem:</span>
+                    <span id="weatherHumidity" class="detail-value">--%</span>
+                </div>
+                <div class="weather-detail">
+                    <span class="detail-label">Rüzgar:</span>
+                    <span id="weatherWind" class="detail-value">-- m/s</span>
+                </div>
+                <div class="weather-detail">
+                    <span class="detail-label">Basınç:</span>
+                    <span id="weatherPressure" class="detail-value">-- hPa</span>
+                </div>
+                <div class="weather-detail">
+                    <span class="detail-label">Görüş:</span>
+                    <span id="weatherVisibility" class="detail-value">-- km</span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="weatherError" class="weather-error" style="display: none;">
+            <p id="weatherErrorMsg">Hava durumu bilgisi alınamadı.</p>
+        </div>
+    </div>
+</div>
